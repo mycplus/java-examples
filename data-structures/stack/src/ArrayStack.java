@@ -4,7 +4,8 @@ import java.util.NoSuchElementException;
 /** A growable array-backed stack. Not thread-safe. */
 public final class ArrayStack<T> {
     private static final int INITIAL_CAPACITY = 8;
-    // Largest array length the JDK itself uses as a safe allocation limit.
+    // OpenJDK's conservative "soft maximum" array length: HotSpot can refuse
+    // arrays closer to Integer.MAX_VALUE even when heap is available.
     private static final int MAX_CAPACITY = Integer.MAX_VALUE - 8;
 
     private Object[] items = new Object[INITIAL_CAPACITY];
