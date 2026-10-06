@@ -12,6 +12,7 @@ Java source code examples accompanying programming tutorials on [MYCPLUS.com](ht
 | [Selection Sort](sorting/selection-sort/) | Selection sort with at most n - 1 swaps | [![Selection Sort](https://github.com/mycplus/java-examples/actions/workflows/selection-sort.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/selection-sort.yml) |
 | [Merge Sort](sorting/merge-sort/) | Top-down merge sort with one buffer, stable | [![Merge Sort](https://github.com/mycplus/java-examples/actions/workflows/merge-sort.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/merge-sort.yml) |
 | [Heap Sort](sorting/heap-sort/) | In-place heap sort with a max-heap stored in the array | [![Heap Sort](https://github.com/mycplus/java-examples/actions/workflows/heap-sort.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/heap-sort.yml) |
+| [Towers of Hanoi](recursion/towers-of-hanoi/) | Recursive and iterative solvers and a Swing animation | [![Towers of Hanoi](https://github.com/mycplus/java-examples/actions/workflows/towers-of-hanoi.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/towers-of-hanoi.yml) |
 
 ## License
 

@@ -1,0 +1,43 @@
+name: towers-of-hanoi
+
+on:
+  push:
+    paths: ['recursion/towers-of-hanoi/**', '.github/workflows/towers-of-hanoi.yml']
+  pull_request:
+    paths: ['recursion/towers-of-hanoi/**', '.github/workflows/towers-of-hanoi.yml']
+
+defaults:
+  run:
+    working-directory: recursion/towers-of-hanoi
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest]
+        java: ['17', '21', '25']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      - name: Compile (lint warnings are errors)
+        shell: bash
+        run: javac --release 17 -Xlint:all -Werror -d build src/*.java tests/*.java pitfalls/*.java
+      - name: Tests (solvers, listing output, animation model, headless rendering)
+        shell: bash
+        run: java -ea -Djava.awt.headless=true -cp build HanoiTest
+      - name: Listing prints the article's output
+        shell: bash
+        run: java -cp build TowersOfHanoi | diff --strip-trailing-cr - tests/expected/TowersOfHanoi.txt
+      - name: Pitfalls behave the way the article says
+        shell: bash
+        run: |
+          java -cp build ShiftOverflow > shift.txt
+          grep -q "^32 disks: 0 moves (int)$" <(tr -d '\r' < shift.txt)
+          grep -q "^64 disks: 0 moves (long)$" <(tr -d '\r' < shift.txt)
+          if java -cp build BaseCaseOne 0 > bco.txt 2>&1; then echo "no StackOverflowError"; exit 1; fi
+          grep -q "java.lang.StackOverflowError" bco.txt
