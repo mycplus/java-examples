@@ -1,0 +1,41 @@
+name: binary-tree
+
+on:
+  push:
+    paths: ['data-structures/binary-tree/**', '.github/workflows/binary-tree.yml']
+  pull_request:
+    paths: ['data-structures/binary-tree/**', '.github/workflows/binary-tree.yml']
+
+defaults:
+  run:
+    working-directory: data-structures/binary-tree
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest]
+        java: ['17', '21', '25']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      - name: Compile (lint warnings are errors)
+        shell: bash
+        run: javac --release 17 -Xlint:all -Werror -d build src/*.java tests/*.java pitfalls/*.java
+      - name: Unit tests
+        shell: bash
+        run: java -ea -cp build BstTest
+      - name: Demo prints the article's output
+        shell: bash
+        run: java -cp build BstDemo | diff --strip-trailing-cr - tests/expected/BstDemo.txt
+      - name: Recursion runs out of stack on a 100,000-node chain
+        shell: bash
+        run: |
+          java -cp build RecursiveHeight | tee rh.txt
+          grep -q "n = 1,000: height 999" rh.txt
+          grep -q "n = 100,000: StackOverflowError" rh.txt
