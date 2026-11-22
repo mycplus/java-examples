@@ -1,0 +1,40 @@
+name: patterns
+
+on:
+  push:
+    paths: ['loops/patterns/**', '.github/workflows/patterns.yml']
+  pull_request:
+    paths: ['loops/patterns/**', '.github/workflows/patterns.yml']
+
+defaults:
+  run:
+    working-directory: loops/patterns
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest]
+        java: ['17', '21', '25']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      - name: Compile (lint warnings are errors)
+        shell: bash
+        run: javac --release 17 -Xlint:all -Werror -d build src/*.java tests/*.java
+      - name: Patterns match the C output, shape rules, Pascal
+        shell: bash
+        run: java -ea -cp build PatternsTest tests/expected | diff --strip-trailing-cr - tests/expected/PatternsTest.txt
+      - name: Demo and Pyramid print the article's output
+        shell: bash
+        run: |
+          java -cp build PatternsDemo list | diff --strip-trailing-cr - tests/expected/list.txt
+          java -cp build PatternsDemo pascal 7 | diff --strip-trailing-cr - tests/expected/pascal-7.txt
+          java -cp build Pyramid < tests/input-5.txt | diff --strip-trailing-cr - tests/expected/pyramid-5.txt
+          if java -cp build Pyramid < tests/input-four.txt > rejected.txt; then exit 1; fi
+          diff --strip-trailing-cr rejected.txt tests/expected/pyramid-rejected.txt

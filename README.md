@@ -14,6 +14,7 @@ Java source code examples accompanying programming tutorials on [MYCPLUS.com](ht
 | [Heap Sort](sorting/heap-sort/) | In-place heap sort with a max-heap stored in the array | [![Heap Sort](https://github.com/mycplus/java-examples/actions/workflows/heap-sort.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/heap-sort.yml) |
 | [Towers of Hanoi](recursion/towers-of-hanoi/) | Recursive and iterative solvers and a Swing animation | [![Towers of Hanoi](https://github.com/mycplus/java-examples/actions/workflows/towers-of-hanoi.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/towers-of-hanoi.yml) |
 | [Serpent](cryptography/serpent/) | The Serpent block cipher, checked against 1,043 test vectors | [![serpent](https://github.com/mycplus/java-examples/actions/workflows/serpent.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/serpent.yml) |
+| [Pattern Programs](loops/patterns/) | The 16 star, number and letter patterns from the C guide, with identical output | [![Pattern Programs](https://github.com/mycplus/java-examples/actions/workflows/patterns.yml/badge.svg)](https://github.com/mycplus/java-examples/actions/workflows/patterns.yml) |
 
 ## License
 
